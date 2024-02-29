@@ -1,8 +1,10 @@
-# img2cisco - a utility to convert a PNG image to a 133x65 (max) CIP (CiscoIPPhoneImage) format hex string.
+#!/usr/bin/env python
+
+# img2cip - a utility to convert a PNG image to a 133x65 (max) CIP (CiscoIPPhoneImage) format hex string.
 # This is useful for creating custom images for Cisco IP Phones.
 
-# Usage: img2cisco.py <input.png> <output.txt> [width] [height]
-# Example: img2cisco.py input.png output.txt 133 65
+# Usage: img2cip.py <input.png> <output.txt> [width] [height]
+# Example: img2cip.py input.png output.txt 133 65
 
 import sys
 import os
@@ -10,7 +12,7 @@ from PIL import Image
 
 # Argument check
 if len(sys.argv) < 3 or len(sys.argv) > 5:
-    print("Usage: img2cisco.py <input.png> <output.txt> [width] [height]")
+    print("Usage: img2cip.py <input.png> <output.txt> [width] [height]")
     sys.exit(1)
 
 # Input and output files
@@ -72,4 +74,11 @@ if count > 0:
     byte = byte << (2 * (4 - count))
     hex_string += "{:02x}".format(byte)
 
+# Write to the output file
+with open(output_file, "w") as file:
+    file.write(hex_string)
+
+# Print the hex string
+print("Conversion complete. Hex string written to", output_file + ".")
+print("Hex string:")
 print(hex_string.upper())
